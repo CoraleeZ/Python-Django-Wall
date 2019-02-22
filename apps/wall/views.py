@@ -84,12 +84,20 @@ def deletemessage(request,messageid):
     a=Messages.objects.get(id=messageid)
 
     if a.user.id==request.session['id']:
+        
+        time=datetime.datetime.now()-a.created_at.replace(tzinfo=None)
+        limit=datetime.timedelta(minutes=30)
+        if time>limit:
+            messages.error(request,'you can not delete message posted 30 minutes ago!',extra_tags='red')
+            return redirect('/wall')
+        else:
+    
         # b=datetime.datetime.now()
         # c=datetime.datetime.strptime(str(a.created_at),'%Y-%m-%d %H:%m:%S')
         # (b-c).minute
         # if (b-c).minute<30:
-        a.delete()
-        return redirect('/wall')
+            a.delete()
+            return redirect('/wall')
         # else:
         #     messages.error(request,'you can not delete message posted 30 minutes ago!',extra_tags='red')
         #     return redirect('/wall')

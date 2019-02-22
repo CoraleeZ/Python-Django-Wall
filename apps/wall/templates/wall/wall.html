@@ -27,6 +27,7 @@
     <hr style="border-top:2px solid black;">
 
     <form action="/addmessage" method="POST" class="offset-sm-1">
+        {%csrf_token%}
         <div class='col-sm-11'>
             <p>Post a message</p>
             <textarea name='message' style="width:96%;height:100px;border: 2px solid black;border-radius: 5px"></textarea>
